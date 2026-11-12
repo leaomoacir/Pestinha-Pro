@@ -1,0 +1,47 @@
+# ===================================================================
+# DADOS DO USUÁRIO & PRIVACIDADE (NUNCA VÃO PARA O GIT)
+# ===================================================================
+# Toda a memória do pet (aprendizado, pesos neurais, preferências,
+# histórico de janelas timeline.csv, logs e episódios):
+memory/
+
+# ===================================================================
+# ARQUIVOS GERADOS PELO PYTHON, PYTEST E BUILDS
+# ===================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.spec
+instalador/saida/
+
+# Ambientes virtuais
+venv/
+env/
+.venv/
+
+# ===================================================================
+# ARQUIVOS DE CONFIGURAÇÃO DE IDEs & SISTEMA OPERACIONAL
+# ===================================================================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# ===================================================================
+# TEMPORÁRIOS, CREDENCIAIS E LOGS
+# ===================================================================
+.env
+.env.*
+*.tmp
+*.corrompido
+*.log
+*.lock
+scratch_*.py
