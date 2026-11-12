@@ -36,15 +36,35 @@ def pet_id_valido(pet_id):
 
 def pasta_de_dados(root, congelado=None, sistema=sys.platform, ambiente=os.environ):
     """
-    Onde gravar a memória. O padrão é memory/ ao lado do programa, mas o executável do Windows pode estar
-    numa pasta sem permissão de escrita (Program Files): sem uma memory/ já existente, usa %LOCALAPPDATA%.
+    Onde gravar a memória. O padrão é memory/ ao lado do programa (ou na pasta temporária nos testes).
+    No ambiente real do usuário:
+    1. Variável de ambiente PESTINHA_MEMORIA (se configurada e existir)
+    2. Repositório irmão pestinha-pro-memoria (ex.: Documents/GitHub/pestinha-pro-memoria)
+    3. No executável instalado no Windows: se não houver memory/ ao lado, usa %LOCALAPPDATA%\\Pestinha.
     """
     if congelado is None:
         congelado = getattr(sys, "frozen", False)
+
+    # 1. Variável de ambiente explícita
+    caminho_env = ambiente.get("PESTINHA_MEMORIA")
+    if caminho_env and Path(caminho_env).is_dir():
+        return Path(caminho_env)
+
+    # 2. Se for o ROOT oficial do projeto (evita afetar diretórios temporários criados por testes)
+    try:
+        if Path(root).resolve() == ROOT.resolve():
+            repo_irmao = Path(root).parent / "pestinha-pro-memoria"
+            if repo_irmao.is_dir() and (repo_irmao / ".git").exists():
+                return repo_irmao
+    except OSError:
+        pass
+
+    # 3. Executável instalado no Windows
     ao_lado = Path(root) / "memory"
     local = ambiente.get("LOCALAPPDATA")
     if congelado and sistema == "win32" and local and not ao_lado.exists():
         return Path(local) / "Pestinha"
+
     return ao_lado
 
 
@@ -219,6 +239,11 @@ class Paths:
     def memory(self):
         """Pasta da memória (memory/ ou %LOCALAPPDATA%\\Pestinha): tudo que é seu e do app, fora do código."""
         return self.dados
+
+    @property
+    def memory_git(self):
+        """Pasta .git da memória se for um repositório git configurado."""
+        return self.memory / ".git"
 
     @property
     def permissions(self):

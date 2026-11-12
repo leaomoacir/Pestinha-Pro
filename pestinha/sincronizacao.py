@@ -103,7 +103,7 @@ def git_pull_seguro(pasta_repo, timeout_s=5):
 
 def git_push_seguro(pasta_repo, pet_nome="Pestinha", timeout_s=8):
     """
-    Adiciona alterações, faz commit silencioso e push para o repositório remoto.
+    Adiciona alterações, faz commit silencioso, rebase e push para o repositório remoto.
     """
     repo = Path(pasta_repo)
     if not (repo / ".git").exists():
@@ -112,6 +112,8 @@ def git_push_seguro(pasta_repo, pet_nome="Pestinha", timeout_s=8):
         subprocess.run(["git", "-C", str(repo), "add", "."], capture_output=True, timeout=timeout_s)
         msg = f"Sincronização do pet: {pet_nome}"
         subprocess.run(["git", "-C", str(repo), "commit", "-m", msg], capture_output=True, timeout=timeout_s)
+        # Garante que puxa novidades de outro PC antes de empurrar para evitar conflito
+        subprocess.run(["git", "-C", str(repo), "pull", "--rebase", "--autostash"], capture_output=True, timeout=timeout_s)
         resultado = subprocess.run(
             ["git", "-C", str(repo), "push"],
             capture_output=True,

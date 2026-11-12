@@ -38,7 +38,11 @@ ehthumbs.db
 # ===================================================================
 # TEMPORÁRIOS, CREDENCIAIS E LOGS
 # ===================================================================
+# Temporários, testes e mocks
+MagicMock/
 .env
+# Temporários, testes e mocks
+MagicMock/
 .env.*
 *.tmp
 *.corrompido

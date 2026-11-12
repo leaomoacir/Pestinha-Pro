@@ -150,7 +150,7 @@ class PestinhaApp(SessaoMixin, InteracaoMixin, QObject):
         self.pet.thrown.connect(self.on_thrown)
         self.pet.menu_requested.connect(self.show_pet_menu)
 
-        # Roda radial de opções estilo GTA/Counter-Strike
+        # Roda radial de opções e ações rápidas
         from .ui.radial_menu import RadialMenu
         self.radial_menu = RadialMenu(self)
         self.radial_menu.acao_selecionada.connect(self.executar_acao_radial)

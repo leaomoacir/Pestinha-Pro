@@ -199,7 +199,7 @@ class SessaoMixin:
         """Salva tudo e fecha o programa; um erro no caminho nunca impede de fechar."""
         try:
             self.save()
-            if not self.wiping and (self.paths.memory / ".git").exists():
+            if not self.wiping and self.paths.memory_git.exists():
                 from ..sincronizacao import git_push_seguro
                 git_push_seguro(self.paths.memory, getattr(self, "nome", "Pestinha"))
             self.mesa.fechar()

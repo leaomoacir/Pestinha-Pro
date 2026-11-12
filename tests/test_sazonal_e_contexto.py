@@ -96,7 +96,7 @@ def test_notebook_virar_tela_e_tablet():
     app_mock.nome = "Pestinha"
     nb = Notebook(app_mock)
     assert nb.virado_para_usuario is False
-    assert nb.modo == "macbook"
+    assert nb.modo == "notebook"
 
     # Clique esquerdo arrasta (não vira a tela)
     press_event = QMouseEvent(QMouseEvent.MouseButtonPress, QPointF(10, 10), QPointF(100, 100), Qt.LeftButton, Qt.LeftButton, Qt.NoModifier)

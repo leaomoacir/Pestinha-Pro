@@ -103,8 +103,8 @@ def main():
             return 0
         store.update({"configurado": True})         # grava já: a próxima vez abre direto
 
-    # Sincroniza memórias remotas (se o repositório privado pestinha-pro-memory estiver configurado)
-    if (paths.memory / ".git").exists():
+    # Sincroniza memórias remotas (se o repositório privado pestinha-pro-memoria estiver configurado)
+    if paths.memory_git.exists():
         from pestinha.sincronizacao import git_pull_seguro
         git_pull_seguro(paths.memory)
 

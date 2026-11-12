@@ -337,7 +337,7 @@ def gerar_print_02():
 
     p.end()
     img.save(str(out_dir / "02_roda_radial.png"))
-    img.save(str(out_dir / "02_roda_radial_gta.png"))
+    img.save(str(out_dir / "02_roda_radial.png"))
     print("02_roda_radial.png salvo!")
 
 
@@ -468,7 +468,7 @@ def gerar_print_06():
 
     p.end()
     img.save(str(out_dir / "06_notebook_e_tablet.png"))
-    img.save(str(out_dir / "06_macbook_e_tablet.png"))
+    img.save(str(out_dir / "06_notebook_e_tablet.png"))
     print("06_notebook_e_tablet.png salvo!")
 
 

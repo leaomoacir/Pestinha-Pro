@@ -58,7 +58,7 @@ Baseado no projeto de código aberto [Pestinha](https://github.com/mille-okws/pe
 - Design, vídeo e 3D passam a contar como trabalho: Blender, Figma, Photoshop, Illustrator, After Effects,
   Premiere, DaVinci Resolve, CapCut, Krita, Inkscape e os fatiadores Bambu Studio, OrcaSlicer, PrusaSlicer
   e Cura. Também Antigravity, Kiro, Trae e Android Studio como programação, e jogos populares (LoL,
-  Roblox, Minecraft, Fortnite, Apex, Dota 2, Rocket League, Overwatch, GTA V, Elden Ring) como jogo.
+  Roblox, Minecraft, Fortnite, Apex, Dota 2, Rocket League, Overwatch, Elden Ring e outros grandes títulos) como jogo.
 
 ## Suporte a macOS e Linux
 

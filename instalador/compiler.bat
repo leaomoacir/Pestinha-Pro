@@ -3,7 +3,7 @@ chcp 65001 >nul
 cd /d "%~dp0\.."
 
 echo [1/2] Compilando binarios...
-python -m PyInstaller --noconfirm --onefile --windowed --hidden-import win32timezone --name Pestinha --distpath dist --workpath build/work --specpath build main.py
+python -m PyInstaller --noconfirm --onefile --windowed --icon assets\comum\icone.ico --hidden-import win32timezone --name Pestinha --distpath dist --workpath build/work --specpath build main.py
 if errorlevel 1 (
     echo [ERRO] Falha ao compilar binarios.
     pause
