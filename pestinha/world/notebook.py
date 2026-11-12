@@ -1,13 +1,13 @@
 """
-NOTEBOOK & TABLET - MacBook Pro e iPad estilo Apple em alumínio unibody.
+NOTEBOOK & TABLET - Notebook Pro e Tablet Digital em alumínio unibody.
 
 Design realista de alta imersão:
 - Posição original e natural: A tampa do notebook fica virada DE COSTAS para nós (tela virada para o pet).
-  O pet senta atrás, olha para a tela dele, com o logo da maçã  virado para a frente e o brilho
+  O pet senta atrás, olha para a tela dele, com o emblema tech estilizado virado para a frente e o brilho
   da tela iluminando o rosto dele por trás da tampa.
 - Interatividade 'Virar Tela': Clique no notebook para ele virar a tela para você (mostrando o código/IDE)
   ou virar de volta para o pet!
-- Modo Tablet (iPad): Alternável pelo menu do notebook para quando o pet estiver assistindo vídeos ou ouvindo música.
+- Modo Tablet: Alternável pelo menu do notebook para quando o pet estiver assistindo vídeos ou ouvindo música.
 """
 
 import math
@@ -30,7 +30,7 @@ def _default_position(size):
 
 
 class Notebook(FloatingWidget):
-    """Computador do pet: MacBook Pro em alumínio Space Gray (virado para ele) e modo Tablet iPad."""
+    """Computador do pet: Notebook Pro em alumínio grafite (virado para ele) e modo Tablet Digital."""
 
     def __init__(self, app):
         size = (NOTEBOOK_W, NOTEBOOK_H)
@@ -43,7 +43,7 @@ class Notebook(FloatingWidget):
 
         self.working = False
         self.virado_para_usuario = False  # Padrão: tela virada para o pet, tampa de costas para nós (como no notebook.png)
-        self.modo = "macbook"             # "macbook" ou "tablet"
+        self.modo = "notebook"            # "notebook" ou "tablet"
         self.code_cursor_blink = 0.0
         self.particles = []
 
@@ -85,8 +85,8 @@ class Notebook(FloatingWidget):
         self.update()
 
     def alternar_modo(self):
-        """Alterna entre MacBook e iPad/Tablet."""
-        self.modo = "tablet" if self.modo == "macbook" else "macbook"
+        """Alterna entre Notebook e Tablet Digital."""
+        self.modo = "tablet" if self.modo == "notebook" else "notebook"
         self.update()
 
     def mousePressEvent(self, event):
@@ -98,7 +98,7 @@ class Notebook(FloatingWidget):
             menu = QMenu(self)
             act_virar = menu.addAction("Virar tela para cá 🔄" if not self.virado_para_usuario else "Virar tela para o pet 💻")
             act_virar.triggered.connect(self.virar_tela)
-            act_modo = menu.addAction("Usar iPad / Tablet 📱" if self.modo == "macbook" else "Usar MacBook Pro 💻")
+            act_modo = menu.addAction("Usar Modo Tablet 📱" if self.modo == "notebook" else "Usar Modo Notebook 💻")
             act_modo.triggered.connect(self.alternar_modo)
             menu.addSeparator()
             act_esconder = menu.addAction("Esconder notebook")
@@ -127,7 +127,7 @@ class Notebook(FloatingWidget):
                     "vx": random.uniform(-3.5, 3.5),
                     "born": now,
                     "dur": random.uniform(1.2, 1.8),
-                    "char": random.choice(["", "swift", "def", "git", "01", "{ }", "⌥", "⌘"]),
+                    "char": random.choice(["⚡", "code", "def", "git", "01", "{ }", "run", "fn"]),
                     "cor": random.choice(["#a8b3be", "#63e56f", "#80d8ff", "#ffd54f", "#ff7b72"]),
                 })
 
@@ -151,9 +151,9 @@ class Notebook(FloatingWidget):
         if self.modo == "tablet":
             self._desenhar_tablet(p)
         elif self.virado_para_usuario:
-            self._desenhar_macbook_aberto(p)
+            self._desenhar_notebook_aberto(p)
         else:
-            self._desenhar_macbook_de_costas(p)
+            self._desenhar_notebook_de_costas(p)
 
         # Partículas de código flutuando
         if self.particles:
@@ -171,12 +171,12 @@ class Notebook(FloatingWidget):
 
         p.end()
 
-    # ---------------- 1. MODO ORIGINAL: MACBOOK DE COSTAS PARA O USUÁRIO (TELA PRO PET) ----------------
+    # ---------------- 1. MODO ORIGINAL: NOTEBOOK DE COSTAS PARA O USUÁRIO (TELA PRO PET) ----------------
 
-    def _desenhar_macbook_de_costas(self, p: QPainter):
+    def _desenhar_notebook_de_costas(self, p: QPainter):
         """
         Posição clássica e realista: o pet senta atrás do notebook e a tela fica virada para ele.
-        Nós vemos a tampa traseira de alumínio Space Gray com a maçã polida  virada para a frente,
+        Nós vemos a tampa traseira de alumínio grafite com o emblema tech polido virado para a frente,
         e o brilho da tela iluminando o rosto do pet por trás.
         """
         # Brilho de tela saindo de trás da tampa quando trabalhando (ilumina o pet)
@@ -203,7 +203,7 @@ class Notebook(FloatingWidget):
         p.setBrush(QColor(0, 0, 0, 60))
         p.drawRoundedRect(rect_base.translated(0, 3.0), 3.0, 3.0)
 
-        # Chassi inferior de alumínio Space Gray
+        # Chassi inferior de alumínio grafite
         grad_chassi = QLinearGradient(rect_base.topLeft(), rect_base.bottomLeft())
         grad_chassi.setColorAt(0.0, QColor("#3f4347"))
         grad_chassi.setColorAt(1.0, QColor("#1e2022"))
@@ -223,7 +223,7 @@ class Notebook(FloatingWidget):
         p.setBrush(QColor(0, 0, 0, 45))
         p.drawRoundedRect(rect_tampa.translated(0, 2.0), 6.0, 6.0)
 
-        # Carcaça de alumínio anodizado Space Gray da tampa traseira
+        # Carcaça de alumínio anodizado da tampa traseira
         grad_tampa = QLinearGradient(rect_tampa.topLeft(), rect_tampa.bottomLeft())
         grad_tampa.setColorAt(0.0, QColor("#54585d"))
         grad_tampa.setColorAt(0.4, QColor("#3e4246"))
@@ -233,7 +233,7 @@ class Notebook(FloatingWidget):
         p.setBrush(grad_tampa)
         p.drawRoundedRect(rect_tampa, 6.0, 6.0)
 
-        # Chanfro usinado de alumínio diamantado Apple (reflexo fino nas arestas)
+        # Chanfro usinado de alumínio (reflexo fino nas arestas)
         p.setPen(QPen(QColor(255, 255, 255, 60), 0.9))
         p.drawRoundedRect(rect_tampa.adjusted(0.7, 0.7, -0.7, -0.7), 5.5, 5.5)
 
@@ -245,18 +245,18 @@ class Notebook(FloatingWidget):
         p.setBrush(QColor("#131516"))
         p.drawRoundedRect(QRectF(dobr_x, dobr_y, dobr_w, dobr_h), 2.0, 2.0)
 
-        # Logotipo icônico da Apple  polido em prata espelhada no centro da tampa
+        # Emblema estilizado de tecnologia no centro da tampa
         cx, cy = rect_tampa.center().x(), rect_tampa.center().y() - 1.0
         p.setFont(QFont("Segoe UI Emoji", 14))
 
         if self.working:
-            # Maçã iluminada sutilmente quando trabalhando
+            # Emblema iluminado sutilmente quando trabalhando
             p.setPen(QColor(255, 255, 255, 240))
         else:
-            # Maçã cromada espelhada
+            # Emblema cromado espelhado
             p.setPen(QColor(210, 215, 222, 175))
 
-        p.drawText(QRectF(cx - 16, cy - 16, 32, 32), Qt.AlignCenter, "")
+        p.drawText(QRectF(cx - 16, cy - 16, 32, 32), Qt.AlignCenter, "⚡")
 
         # Pés de borracha sutis embaixo da base
         p.setPen(Qt.NoPen)
@@ -264,10 +264,10 @@ class Notebook(FloatingWidget):
         p.drawRoundedRect(QRectF(base_x + 8, base_y + base_h - 1.5, 12, 2.5), 1.0, 1.0)
         p.drawRoundedRect(QRectF(base_x + base_w - 20, base_y + base_h - 1.5, 12, 2.5), 1.0, 1.0)
 
-    # ---------------- 2. MODO APRESENTAÇÃO: MACBOOK VIRADO PARA NÓS (TELA VISÍVEL) ----------------
+    # ---------------- 2. MODO APRESENTAÇÃO: NOTEBOOK VIRADO PARA NÓS (TELA VISÍVEL) ----------------
 
-    def _desenhar_macbook_aberto(self, p: QPainter):
-        """Modo virado: o pet vira o notebook para a frente para mostrar o código na tela Retina."""
+    def _desenhar_notebook_aberto(self, p: QPainter):
+        """Modo virado: o pet vira o notebook para a frente para mostrar o código na tela IPS HD."""
         tampa_w, tampa_h = 124, 48
         tampa_x = (NOTEBOOK_W - tampa_w) / 2
         tampa_y = 4.0
@@ -278,7 +278,7 @@ class Notebook(FloatingWidget):
         p.setBrush(QColor(0, 0, 0, 55))
         p.drawRoundedRect(rect_tampa.translated(0, 3), 6, 6)
 
-        # Carcaça Space Gray
+        # Carcaça Grafite
         grad_tampa = QLinearGradient(rect_tampa.topLeft(), rect_tampa.bottomLeft())
         grad_tampa.setColorAt(0.0, QColor("#484c50"))
         grad_tampa.setColorAt(1.0, QColor("#232527"))
@@ -286,18 +286,18 @@ class Notebook(FloatingWidget):
         p.setBrush(grad_tampa)
         p.drawRoundedRect(rect_tampa, 6, 6)
 
-        # Tela Retina interna
+        # Tela interna
         visor = rect_tampa.adjusted(3.5, 3.5, -3.5, -3.5)
         p.setPen(Qt.NoPen)
         p.setBrush(QColor("#0d1117"))
         p.drawRoundedRect(visor, 3.5, 3.5)
 
-        # Barra macOS
+        # Barra do Editor
         p.setBrush(QColor("#161b22"))
         p.drawRoundedRect(QRectF(visor.left(), visor.top(), visor.width(), 8.0), 3.5, 3.5)
         p.drawRect(QRectF(visor.left(), visor.top() + 4.0, visor.width(), 4.0))
 
-        # Bolinhas macOS
+        # Bolinhas de controle de janela
         p.setBrush(QColor("#ff5f56"))
         p.drawEllipse(QPointF(visor.left() + 6.0, visor.top() + 4.0), 2.2, 2.2)
         p.setBrush(QColor("#ffbd2e"))
@@ -305,7 +305,7 @@ class Notebook(FloatingWidget):
         p.setBrush(QColor("#27c93f"))
         p.drawEllipse(QPointF(visor.left() + 18.0, visor.top() + 4.0), 2.2, 2.2)
 
-        # Notch e LED
+        # Borda e webcam
         p.setBrush(QColor("#000000"))
         p.drawRoundedRect(QRectF(visor.center().x() - 6.5, visor.top(), 13.0, 3.8), 1.5, 1.5)
         p.setBrush(QColor("#34c759"))
@@ -332,7 +332,7 @@ class Notebook(FloatingWidget):
         p.setBrush(QColor("#141517"))
         p.drawRoundedRect(QRectF(dobr_x, dobr_y, dobr_w, dobr_h), 2, 2)
 
-        # Base Magic Keyboard
+        # Base do teclado
         base_top_w, base_bot_w = 126, 140
         base_top_y, base_bot_y = dobr_y + 1.2, NOTEBOOK_H - 7.0
         poly_base = QPolygonF([
@@ -371,16 +371,16 @@ class Notebook(FloatingWidget):
         p.setBrush(QColor("#2b2e31"))
         p.drawRoundedRect(QRectF((NOTEBOOK_W - track_w) / 2, well_y + well_h + 1.6, track_w, track_h), 2.0, 2.0)
 
-    # ---------------- 3. MODO TABLET (iPad) ----------------
+    # ---------------- 3. MODO TABLET DIGITAL ----------------
 
     def _desenhar_tablet(self, p: QPainter):
-        """Desenha um iPad em suporte de mesa: perfeito para assistir vídeos ou curtir músicas."""
+        """Desenha um tablet em suporte de mesa: perfeito para assistir vídeos ou curtir músicas."""
         tab_w, tab_h = 112, 70
         tab_x = (NOTEBOOK_W - tab_w) / 2
         tab_y = NOTEBOOK_H - tab_h - 10.0
         rect_tab = QRectF(tab_x, tab_y, tab_w, tab_h)
 
-        # Suporte metálico traseiro (Smart Folio / Stand)
+        # Suporte metálico traseiro
         p.setPen(Qt.NoPen)
         p.setBrush(QColor("#212426"))
         poly_stand = QPolygonF([
@@ -391,11 +391,11 @@ class Notebook(FloatingWidget):
         ])
         p.drawPolygon(poly_stand)
 
-        # Sombra do iPad
+        # Sombra do tablet
         p.setBrush(QColor(0, 0, 0, 50))
         p.drawRoundedRect(rect_tab.translated(0, 3), 7, 7)
 
-        # Carcaça de alumínio do iPad
+        # Carcaça de alumínio do tablet
         grad_pad = QLinearGradient(rect_tab.topLeft(), rect_tab.bottomLeft())
         grad_pad.setColorAt(0.0, QColor("#4e5257"))
         grad_pad.setColorAt(1.0, QColor("#2c2f32"))
@@ -403,13 +403,13 @@ class Notebook(FloatingWidget):
         p.setBrush(grad_pad)
         p.drawRoundedRect(rect_tab, 7, 7)
 
-        # Vidro da tela do iPad (bordas finas)
+        # Vidro da tela do tablet (bordas finas)
         tela = rect_tab.adjusted(4.0, 4.0, -4.0, -4.0)
         p.setPen(Qt.NoPen)
         p.setBrush(QColor("#0b0d0f"))
         p.drawRoundedRect(tela, 5, 5)
 
-        # Conteúdo na tela do iPad: player de vídeo ou ondas de música
+        # Conteúdo na tela: player de vídeo ou ondas de música
         now = time.monotonic()
         p.setPen(Qt.NoPen)
 
@@ -417,7 +417,7 @@ class Notebook(FloatingWidget):
         p.setBrush(QColor("#ff0000"))
         p.drawRect(QRectF(tela.left() + 6, tela.bottom() - 6, (tela.width() - 12) * ((now * 0.1) % 1.0), 2.5))
 
-        # Ícone de play vermelho estilo YouTube ou equalizador de música
+        # Ícone de play vermelho de vídeo ou equalizador de música
         cx, cy = tela.center().x(), tela.center().y()
         p.setBrush(QColor("#ff0000"))
         p.drawRoundedRect(QRectF(cx - 14, cy - 10, 28, 20), 4, 4)
@@ -426,7 +426,7 @@ class Notebook(FloatingWidget):
         tri = QPolygonF([QPointF(cx - 4, cy - 6), QPointF(cx + 6, cy), QPointF(cx - 4, cy + 6)])
         p.drawPolygon(tri)
 
-        # Notificação sutil no topo do iPad
+        # Notificação sutil no topo do tablet
         p.setFont(QFont("Arial", 6))
         p.setPen(QColor(255, 255, 255, 160))
-        p.drawText(QRectF(tela.left(), tela.top() + 3, tela.width(), 10), Qt.AlignCenter, "YouTube · Pestinha Play")
+        p.drawText(QRectF(tela.left(), tela.top() + 3, tela.width(), 10), Qt.AlignCenter, "Mídia · Pestinha Player")

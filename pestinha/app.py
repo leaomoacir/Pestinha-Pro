@@ -342,10 +342,10 @@ class PestinhaApp(SessaoMixin, InteracaoMixin, QObject):
         elif acao_id == "tech_tablet":
             self.mesa.caderno.modo = "tablet"
             self.mesa.caderno.virado_para_usuario = True
-            self.mostrar_popup("Modo Tablet iPad ativado! 📱✨", 3.0)
-        elif acao_id == "tech_macbook":
-            self.mesa.caderno.modo = "macbook"
-            self.mostrar_popup("MacBook Pro aberto com teclado! 💻✨", 3.0)
+            self.mostrar_popup("Modo Tablet Digital ativado! 📱✨", 3.0)
+        elif acao_id in ("tech_notebook", "tech_macbook"):
+            self.mesa.caderno.modo = "notebook"
+            self.mostrar_popup("Notebook Pro aberto com teclado! 💻✨", 3.0)
         elif acao_id == "tech_guardar":
             self.menu_alternar_notebook()
 

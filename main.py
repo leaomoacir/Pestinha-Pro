@@ -103,6 +103,11 @@ def main():
             return 0
         store.update({"configurado": True})         # grava já: a próxima vez abre direto
 
+    # Sincroniza memórias remotas (se o repositório privado pestinha-pro-memory estiver configurado)
+    if (paths.memory / ".git").exists():
+        from pestinha.sincronizacao import git_pull_seguro
+        git_pull_seguro(paths.memory)
+
     pet_app = PestinhaApp(store, paths)
     if args.sair_em > 0:
         QTimer.singleShot(int(args.sair_em * 1000), pet_app.quit)

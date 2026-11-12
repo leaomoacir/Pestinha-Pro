@@ -64,7 +64,7 @@ class PetWindow(QWidget):
     drag_ended = Signal()
     thrown = Signal(float)          # velocidade do arremesso (px/s)
     menu_requested = Signal(object) # botão direito: posição global do clique
-    radial_requested = Signal(object) # abre roda de opções estilo GTA/CS (pos global)
+    radial_requested = Signal(object) # abre roda radial de ações (pos global)
     radial_move = Signal(object)      # movimento direcional da mira na roda
     radial_released = Signal(object)  # soltura para executar opção da roda
 
@@ -266,7 +266,7 @@ class PetWindow(QWidget):
         if event.button() == Qt.RightButton:
             self._right_press = (pos.toPoint(), time.monotonic())
             self._radial_active = False
-            # 300 ms segurando o botão direito abre a roda radial de opções estilo GTA/CS!
+            # 300 ms segurando o botão direito abre a roda radial de ações!
             self._radial_timer.start(300)
             return
 

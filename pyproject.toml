@@ -1,11 +1,19 @@
 [project]
-name = "pestinha"
-version = "0.8.0"
-description = "Pestinha: pets de tela para Windows, macOS e Linux, cada um com uma rede neural pulsada."
-requires-python = ">=3.11"
+name = "pestinha-pro"
+version = "2.0.0"
+description = "Pestinha Pro: Pet virtual de mesa inteligente com cérebro biológico de 470 neurônios, roda radial GTA, MacBook Pro, iPad, notícias web e reações musicais."
 readme = "README.md"
+requires-python = ">=3.11"
 license = "GPL-3.0-or-later"
 license-files = ["LICENSE"]
+authors = [
+    { name = "mille-okws", url = "https://github.com/mille-okws/pestinha" },
+    { name = "Moa" }
+]
+
+[project.urls]
+"Projeto Original" = "https://github.com/mille-okws/pestinha"
+"Repositório" = "https://github.com/mille-okws/pestinha"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

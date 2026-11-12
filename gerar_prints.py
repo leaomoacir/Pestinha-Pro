@@ -292,7 +292,7 @@ def gerar_print_01():
 
 
 # ==============================================================================
-# 2. RODA RADIAL ESTILO GTA COM SUBMENUS DE DIÁLOGO
+# 2. RODA RADIAL DE AÇÕES COM SUBMENUS DE DIÁLOGO
 # ==============================================================================
 def gerar_print_02():
     w, h = 900, 580
@@ -300,7 +300,7 @@ def gerar_print_02():
     p = QPainter(img)
     p.setRenderHint(QPainter.Antialiasing)
 
-    desenhar_fundo_desktop(p, w, h, "Roda Radial de Opções Estilo GTA/CS:GO com Diálogos e Submenus")
+    desenhar_fundo_desktop(p, w, h, "Roda Radial de Opções com Diálogos e Submenus")
 
     # Renderiza o menu radial centralizado com a opção de Diálogo destacada
     mock_app = criar_app_mock()
@@ -336,8 +336,9 @@ def gerar_print_02():
                "• 🤔 O que tá achando?")
 
     p.end()
+    img.save(str(out_dir / "02_roda_radial.png"))
     img.save(str(out_dir / "02_roda_radial_gta.png"))
-    print("02_roda_radial_gta.png salvo!")
+    print("02_roda_radial.png salvo!")
 
 
 # ==============================================================================
@@ -434,7 +435,7 @@ def gerar_print_05():
 
 
 # ==============================================================================
-# 6. MACBOOK PRO APPLE SPACE GRAY & MODO TABLET IPAD
+# 6. NOTEBOOK PRO GRAFITE & MODO TABLET DIGITAL
 # ==============================================================================
 def gerar_print_06():
     w, h = 900, 520
@@ -442,32 +443,33 @@ def gerar_print_06():
     p = QPainter(img)
     p.setRenderHint(QPainter.Antialiasing)
 
-    desenhar_fundo_desktop(p, w, h, "MacBook Pro Apple (Magic Keyboard & Retina) & Modo Tablet iPad")
+    desenhar_fundo_desktop(p, w, h, "Notebook Pro (Teclado Chiclet & Tela HD) & Modo Tablet Digital")
 
     mock_app = criar_app_mock()
 
-    # MacBook Apple à esquerda
-    nb_mac = Notebook(mock_app)
-    nb_mac.virado_para_usuario = True
-    nb_mac.modo = "macbook"
-    nb_mac.render(p, QPoint(140, 180))
+    # Notebook à esquerda
+    nb_pc = Notebook(mock_app)
+    nb_pc.virado_para_usuario = True
+    nb_pc.modo = "notebook"
+    nb_pc.render(p, QPoint(140, 180))
 
     p.setFont(QFont("Segoe UI", 9, QFont.Bold))
     p.setPen(QColor("#79c0ff"))
-    p.drawText(QRectF(110, 360, 220, 40), Qt.AlignCenter, "MacBook Pro Space Gray\n(Teclado Magic + Tela Retina)")
+    p.drawText(QRectF(110, 360, 220, 40), Qt.AlignCenter, "Notebook Pro Grafite\n(Teclado Ergonômico + Tela HD)")
 
-    # Tablet iPad à direita
-    nb_ipad = Notebook(mock_app)
-    nb_ipad.virado_para_usuario = True
-    nb_ipad.modo = "tablet"
-    nb_ipad.render(p, QPoint(540, 180))
+    # Tablet Digital à direita
+    nb_tab = Notebook(mock_app)
+    nb_tab.virado_para_usuario = True
+    nb_tab.modo = "tablet"
+    nb_tab.render(p, QPoint(540, 180))
 
     p.setPen(QColor("#4fe387"))
-    p.drawText(QRectF(510, 360, 220, 40), Qt.AlignCenter, "Modo Tablet iPad\n(Suporte ergonômico para vídeos)")
+    p.drawText(QRectF(510, 360, 220, 40), Qt.AlignCenter, "Modo Tablet Digital\n(Suporte ergonômico para vídeos)")
 
     p.end()
+    img.save(str(out_dir / "06_notebook_e_tablet.png"))
     img.save(str(out_dir / "06_macbook_e_tablet.png"))
-    print("06_macbook_e_tablet.png salvo!")
+    print("06_notebook_e_tablet.png salvo!")
 
 
 if __name__ == "__main__":

@@ -1,22 +1,26 @@
-; Instalador do Pestinha para Windows (Inno Setup 6). Instala só para o usuário atual, sem pedir administrador.
-; Antes, gere o executável (ver README). Depois, nesta pasta: ISCC pestinha.iss
+; Instalador do Pestinha Pro para Windows (Inno Setup 6). Instala só para o usuário atual, sem pedir administrador.
+; Gera um único arquivo instalador .exe com Python, PySide6 e todas as dependências embutidas.
 ; Sai em instalador\saida\. A memória fica em %LOCALAPPDATA%\Pestinha e não é apagada ao desinstalar.
 
-#define Versao "0.8.0"
+#define Versao "2.0.0"
 
 [Setup]
 AppId={{7C7C1F0E-5B0A-4B57-9A63-6E2E5A3F8D10}
-AppName=Pestinha
+AppName=Pestinha Pro
 AppVersion={#Versao}
-DefaultDirName={localappdata}\Programs\Pestinha
-DefaultGroupName=Pestinha
+AppPublisher=mille-okws & Moa
+AppPublisherURL=https://github.com/mille-okws/pestinha
+AppSupportURL=https://github.com/mille-okws/pestinha
+AppUpdatesURL=https://github.com/mille-okws/pestinha
+DefaultDirName={localappdata}\Programs\Pestinha Pro
+DefaultGroupName=Pestinha Pro
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
 OutputDir=saida
-OutputBaseFilename=Pestinha-{#Versao}-instalador
+OutputBaseFilename=Pestinha-Pro-{#Versao}-Instalador
 UninstallDisplayIcon={app}\Pestinha.exe
 LicenseFile=..\LICENSE
-Compression=lzma2
+Compression=lzma2/max
 SolidCompression=yes
 WizardStyle=modern
 CloseApplications=yes
@@ -25,23 +29,25 @@ CloseApplications=yes
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 
 [Tasks]
-Name: "atalho"; Description: "Criar atalho na área de trabalho"; Flags: unchecked
+Name: "atalho"; Description: "Criar atalho na Área de Trabalho"; Flags: unchecked
+Name: "iniciar_com_windows"; Description: "Iniciar o Pestinha Pro ao ligar o computador"; Flags: unchecked
 
 [Files]
-Source: "..\build\onefile\Pestinha.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\dist\Pestinha.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\assets\*"; DestDir: "{app}\assets"; Flags: ignoreversion recursesubdirs
 Source: "..\pets\*"; DestDir: "{app}\pets"; Flags: ignoreversion recursesubdirs
 Source: "..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\PRIVACIDADE.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\README.md"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
-Name: "{group}\Pestinha"; Filename: "{app}\Pestinha.exe"
-Name: "{group}\Configurar o Pestinha"; Filename: "{app}\Pestinha.exe"; Parameters: "--configurar"
-Name: "{userdesktop}\Pestinha"; Filename: "{app}\Pestinha.exe"; Tasks: atalho
+Name: "{group}\Pestinha Pro"; Filename: "{app}\Pestinha.exe"
+Name: "{group}\Configurar o Pestinha Pro"; Filename: "{app}\Pestinha.exe"; Parameters: "--configurar"
+Name: "{userdesktop}\Pestinha Pro"; Filename: "{app}\Pestinha.exe"; Tasks: atalho
 
 [Registry]
-; A opção "abrir ao entrar no Windows" não pode sobreviver ao programa
-Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueName: "Pestinha"; Flags: dontcreatekey uninsdeletevalue
+; Opção opcional de iniciar com o Windows escolhida pelo instalador
+Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueName: "Pestinha Pro"; ValueType: string; ValueData: """{app}\Pestinha.exe"""; Flags: uninsdeletevalue; Tasks: iniciar_com_windows
 
 [Run]
-Filename: "{app}\Pestinha.exe"; Description: "Abrir o Pestinha"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\Pestinha.exe"; Description: "Abrir o Pestinha Pro agora"; Flags: nowait postinstall skipifsilent

@@ -1,9 +1,9 @@
 """
-RODA RADIAL DE OPÇÕES (MENU ESTILO GTA / CS:GO / APEX COM SUBMENUS) - pestinha/ui/radial_menu.py
+RODA RADIAL DE OPÇÕES (MENU INTERATIVO COM SUBMENUS) - pestinha/ui/radial_menu.py
 
 Menu circular de alto impacto visual que surge ao segurar o botão direito sobre o pet:
   - Fatias circulares com ícones, cores e iluminação direcional (atan2)
-  - Suporte completo a submenus (Diálogo com o Pet, Tecnologia/MacBook, Notícias & Datas)
+  - Suporte completo a submenus (Diálogo com o Pet, Tecnologia/Notebook, Notícias & Datas)
   - Núcleo central com prévia da ação, descrição detalhada e botão de retorno
   - Seleção fluida por gesto: ao soltar o botão, executa a ação sob a mira
   - Cancelamento intuitivo soltando no miolo central
@@ -39,7 +39,7 @@ MENUS_DEF = {
         {"id": "petisco", "icone": "🍪", "titulo": "Dar Petisco", "desc": "Biscoitinho que dá energia e felicidade", "cor": "#ffb347"},
         {"id": "carinho", "icone": "🥰", "titulo": "Dar Carinho", "desc": "Afago imediato, aquece o coração e sinapses", "cor": "#ff70a6"},
         {"id": "bolinha", "icone": "🎾", "titulo": "Jogar Bolinha", "desc": "Põe a bolinha de tênis física para brincar", "cor": "#70d6ff"},
-        {"id": "submenu_tech", "icone": "💻", "titulo": "MacBook / iPad", "desc": "Girar a tela, modo tablet ou notebook", "submenu": True, "cor": "#b388ff"},
+        {"id": "submenu_tech", "icone": "💻", "titulo": "Notebook / Tablet", "desc": "Girar a tela, modo tablet ou notebook", "submenu": True, "cor": "#b388ff"},
         {"id": "painel", "icone": "🧠", "titulo": "Central Neural", "desc": "Abre a central completa de humor e cérebro", "cor": "#4fe387"},
         {"id": "dormir", "icone": "💤", "titulo": "Dormir / Soneca", "desc": "Pede para tirar uma soneca ou despertar", "cor": "#a0c4ff"},
         {"id": "submenu_mundo", "icone": "🌐", "titulo": "Mundo & Datas", "desc": "Notícias web e curiosidades de hoje", "submenu": True, "cor": "#00f5d4"},
@@ -55,9 +55,9 @@ MENUS_DEF = {
         {"id": "voltar", "icone": "🔙", "titulo": "Voltar", "desc": "Retornar ao menu radial principal", "cor": "#8d99ae"},
     ],
     "submenu_tech": [
-        {"id": "tech_virar", "icone": "🔄", "titulo": "Virar a Tela", "desc": "Gira a tela do MacBook entre você e ele", "cor": "#60b5ff"},
-        {"id": "tech_tablet", "icone": "📱", "titulo": "Modo Tablet iPad", "desc": "Coloca o tablet para assistir vídeos e ouvir som", "cor": "#4fe387"},
-        {"id": "tech_macbook", "icone": "💻", "titulo": "Modo MacBook", "desc": "Abre o MacBook Pro Apple com teclado", "cor": "#b388ff"},
+        {"id": "tech_virar", "icone": "🔄", "titulo": "Virar a Tela", "desc": "Gira a tela do notebook entre você e ele", "cor": "#60b5ff"},
+        {"id": "tech_tablet", "icone": "📱", "titulo": "Modo Tablet", "desc": "Coloca o tablet para assistir vídeos e ouvir som", "cor": "#4fe387"},
+        {"id": "tech_notebook", "icone": "💻", "titulo": "Modo Notebook", "desc": "Abre o notebook com teclado", "cor": "#b388ff"},
         {"id": "tech_guardar", "icone": "📦", "titulo": "Guardar Aparelho", "desc": "Guarda o notebook/tablet na mochila", "cor": "#ff70a6"},
         {"id": "voltar", "icone": "🔙", "titulo": "Voltar", "desc": "Retornar ao menu radial principal", "cor": "#8d99ae"},
     ],
@@ -70,7 +70,7 @@ MENUS_DEF = {
 
 
 class RadialMenu(QWidget):
-    """Menu radial estilo GTA/CS:GO com submenus interativos e seleção por mouse."""
+    """Menu radial interativo com submenus e seleção intuitiva por mira e mouse."""
 
     acao_selecionada = Signal(str)
     fechado = Signal()

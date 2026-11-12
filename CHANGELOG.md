@@ -1,5 +1,40 @@
 # Histórico de versões
 
+## 2.0.0 — Pestinha Pro (Edição Aprimorada)
+
+Baseado no projeto de código aberto [Pestinha](https://github.com/mille-okws/pestinha) criado por [mille-okws](https://github.com/mille-okws), sob a licença GNU GPL v3.
+
+### Novas Funcionalidades
+- **Roda Radial de Ações (Menu Circular de Interação Rápida):**
+  - Segurar o botão direito (≥300ms) abre o menu radial translúcido sobre a tela.
+  - Submenu de diálogo e interações avançadas com abertura automática por **hover de 600ms**, sem precisar clicar.
+  - Retorno suave para o menu principal ao arrastar a mira para fora da roda.
+  - Toque rápido no botão direito (<300ms) preserva o menu clássico de contexto.
+- **Notebook Pro Grafite & Modo Tablet Digital:**
+  - Posição realista com a tampa e emblema tech voltados para o usuário e reflexo da tela no rosto do pet.
+  - Totalmente arrastável com botão esquerdo para reposicionar livremente na tela (persistido em `panels.json`).
+  - Função de virar a tela para o usuário e alternância dinâmica para o modo Tablet Digital.
+- **Leitura Confortável de Balões (Hover-Pause):**
+  - Ao passar o cursor do mouse sobre qualquer balão de fala ou notícia, o tempo de expiração é pausado indefinidamente.
+  - O pet interrompe sua caminhada e aguarda pacientemente enquanto o usuário lê o balão.
+  - Tolerância de 3 segundos ao retirar o mouse e botão `✕` para fechamento instantâneo.
+- **Busca de Notícias Web & Fatos Curiosos:**
+  - Sistema inteligente de busca em momentos ociosos (`AWAY`) trazendo novidades do TabNews, fatos da Wikipédia e suporte a IAs modernas.
+- **Datas Comemorativas Sazonais:**
+  - Adornos visuais gerados proceduralmente: chapéu de palha no São João/Festa Junina, gorro de Natal, orelhas de Páscoa, máscara de Carnaval, cartola de Ano Novo, chapéu de bruxinha no Halloween e óculos Matrix no Dia do Programador.
+- **Reconhecimento Musical & Streaming:**
+  - Animação de *headbanging* rítmico no Rock/Metal, dança animada no Pop/Funk e modo relax no Lo-Fi, com notas musicais flutuantes (`🎵`, `🎸`, `🎶`, `✨`).
+- **Membros Fisiológicos Animados:**
+  - Perninhas bípedes com passos cadenciados apoiados na barra de tarefas.
+  - Bracinhos com gestos expressivos (comemorar pulando, coçar a cabeça, cruzar os braços, digitar).
+- **Galeria de Capturas de Alta Resolução (`docs/prints/`):**
+  - Gerador aprimorado com DirectWrite nativo do Windows, sem artefatos ou caracteres ilegíveis.
+
+### Correções e Estabilidade
+- Correção no `paintEvent` com encapsulamento seguro `try ... finally` impedindo artefatos no canal alfa transparente do Desktop Window Manager (DWM).
+- Suíte completa de 402 testes automatizados aprovada sem regressões.
+
+
 ## 0.8.0 — melhorias para o Windows
 
 ### Correções
