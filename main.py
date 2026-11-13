@@ -58,7 +58,35 @@ def main():
     parser.add_argument("--direto", action="store_true", help="pula a tela de permissões")
     parser.add_argument("--configurar", action="store_true", help="mostra a tela de permissões")
     parser.add_argument("--sair-em", type=float, default=0.0, help="fecha sozinho após N segundos (teste)")
+    parser.add_argument("--status", action="store_true", help="exibe diagnóstico da memória e sincronização")
     args = parser.parse_args()
+
+    if args.status:
+        paths = Paths()
+        print("=" * 60)
+        print(f"       DIAGNÓSTICO DE MEMÓRIA - {config.APP_NOME}")
+        print("=" * 60)
+        print(f"Pasta do aplicativo : {paths.root}")
+        print(f"Pasta de memória    : {paths.memory}")
+        tem_git = paths.memory_git.exists()
+        print(f"Sincronização Git   : {'CONECTADA (Repositório Privado)' if tem_git else 'LOCAL (Sem Git)'}")
+        if tem_git:
+            import subprocess
+            try:
+                remoto = subprocess.run(["git", "-C", str(paths.memory), "remote", "get-url", "origin"], capture_output=True, text=True, timeout=2).stdout.strip()
+                commit = subprocess.run(["git", "-C", str(paths.memory), "log", "-1", "--oneline"], capture_output=True, text=True, timeout=2).stdout.strip()
+                if remoto:
+                    print(f"Remoto Git          : {remoto}")
+                if commit:
+                    print(f"Último commit       : {commit}")
+            except Exception:
+                pass
+        pets_dir = paths.memoria_dos_pets
+        if pets_dir.exists():
+            pets = [p.name for p in pets_dir.iterdir() if p.is_dir()]
+            print(f"Pets sincronizados  : {', '.join(pets) if pets else 'Nenhum ainda'}")
+        print("=" * 60)
+        return 0
 
     plataforma.anexar_desktop_interativo()
     app = QApplication(sys.argv)

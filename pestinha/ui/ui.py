@@ -185,7 +185,8 @@ class SettingsDialog(QDialog):
                 everything = QPushButton(f"Apagar todos os dados do {config.APP_NOME}")
                 everything.clicked.connect(self._wipe_everything)
                 layout.addWidget(everything)
-                pasta = QLabel(f"Pasta de dados: {self.paths.memory}")
+                badge = " (☁ Repositório Git conectado)" if self.paths.memory_git.exists() else " (Armazenamento local)"
+                pasta = QLabel(f"Pasta de memória: {self.paths.memory}{badge}")
                 pasta.setObjectName("hint")
                 pasta.setWordWrap(True)
                 layout.addWidget(pasta)

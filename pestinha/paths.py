@@ -40,7 +40,8 @@ def pasta_de_dados(root, congelado=None, sistema=sys.platform, ambiente=os.envir
     No ambiente real do usuário:
     1. Variável de ambiente PESTINHA_MEMORIA (se configurada e existir)
     2. Repositório irmão pestinha-pro-memoria (ex.: Documents/GitHub/pestinha-pro-memoria)
-    3. No executável instalado no Windows: se não houver memory/ ao lado, usa %LOCALAPPDATA%\\Pestinha.
+    3. Repositório pestinha-pro-memoria na pasta padrão do GitHub Desktop (~/Documents/GitHub/pestinha-pro-memoria)
+    4. No executável instalado no Windows para usuário comum: usa %LOCALAPPDATA%\\Pestinha.
     """
     if congelado is None:
         congelado = getattr(sys, "frozen", False)
@@ -50,16 +51,22 @@ def pasta_de_dados(root, congelado=None, sistema=sys.platform, ambiente=os.envir
     if caminho_env and Path(caminho_env).is_dir():
         return Path(caminho_env)
 
-    # 2. Se for o ROOT oficial do projeto (evita afetar diretórios temporários criados por testes)
+    # 2. Se for a execução real da aplicação (evita afetar diretórios temporários criados por testes)
     try:
         if Path(root).resolve() == ROOT.resolve():
+            # A. Pasta irmã ao lado da pasta do app (ex.: Documents/GitHub/pestinha-pro-memoria)
             repo_irmao = Path(root).parent / "pestinha-pro-memoria"
             if repo_irmao.is_dir() and (repo_irmao / ".git").exists():
                 return repo_irmao
+
+            # B. Pasta padrão do GitHub Desktop na conta do usuário
+            user_github = Path.home() / "Documents" / "GitHub" / "pestinha-pro-memoria"
+            if user_github.is_dir() and (user_github / ".git").exists():
+                return user_github
     except OSError:
         pass
 
-    # 3. Executável instalado no Windows
+    # 3. Executável instalado no Windows (usuário comum sem repositório de memória)
     ao_lado = Path(root) / "memory"
     local = ambiente.get("LOCALAPPDATA")
     if congelado and sistema == "win32" and local and not ao_lado.exists():
