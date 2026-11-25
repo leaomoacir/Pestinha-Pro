@@ -34,13 +34,21 @@ def pet_id_valido(pet_id):
     return isinstance(pet_id, str) and bool(ID_DE_PET.match(pet_id))
 
 
+NOMES_REPO_MEMORIA = (
+    "pestinha-pro-memoria",
+    "pestinha-memoria",
+    "pestinha-pro-memory",
+    "pestinha-memory",
+)
+
+
 def pasta_de_dados(root, congelado=None, sistema=sys.platform, ambiente=os.environ):
     """
     Onde gravar a memória. O padrão é memory/ ao lado do programa (ou na pasta temporária nos testes).
     No ambiente real do usuário:
     1. Variável de ambiente PESTINHA_MEMORIA (se configurada e existir)
-    2. Repositório irmão pestinha-pro-memoria (ex.: Documents/GitHub/pestinha-pro-memoria)
-    3. Repositório pestinha-pro-memoria na pasta padrão do GitHub Desktop (~/Documents/GitHub/pestinha-pro-memoria)
+    2. Repositório irmão de memória (pestinha-pro-memoria, pestinha-memoria, etc.)
+    3. Repositório de memória na pasta padrão do GitHub Desktop (~/Documents/GitHub/<repo>)
     4. No executável instalado no Windows para usuário comum: usa %LOCALAPPDATA%\\Pestinha.
     """
     if congelado is None:
@@ -55,14 +63,16 @@ def pasta_de_dados(root, congelado=None, sistema=sys.platform, ambiente=os.envir
     try:
         if Path(root).resolve() == ROOT.resolve():
             # A. Pasta irmã ao lado da pasta do app (ex.: Documents/GitHub/pestinha-pro-memoria)
-            repo_irmao = Path(root).parent / "pestinha-pro-memoria"
-            if repo_irmao.is_dir() and (repo_irmao / ".git").exists():
-                return repo_irmao
+            for nome_repo in NOMES_REPO_MEMORIA:
+                repo_irmao = Path(root).parent / nome_repo
+                if repo_irmao.is_dir() and (repo_irmao / ".git").exists():
+                    return repo_irmao
 
             # B. Pasta padrão do GitHub Desktop na conta do usuário
-            user_github = Path.home() / "Documents" / "GitHub" / "pestinha-pro-memoria"
-            if user_github.is_dir() and (user_github / ".git").exists():
-                return user_github
+            for nome_repo in NOMES_REPO_MEMORIA:
+                user_github = Path.home() / "Documents" / "GitHub" / nome_repo
+                if user_github.is_dir() and (user_github / ".git").exists():
+                    return user_github
     except OSError:
         pass
 
