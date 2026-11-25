@@ -10,10 +10,11 @@ from ..log import log
 import random
 import time
 from pathlib import Path
-from ..store import append_line
+from ..store import append_line, read_lines, write_lines
 
 TEMPO_MINIMO_AUSENCIA = 20.0     # s ausente para iniciar uma reflexão de sonho
 COOLDOWN_SONHO = 300.0           # s (5 minutos) entre ciclos de reflexão
+MAX_RECADINHOS_DINAMICOS = 40    # limite máximo para não inchar o arquivo de pensamentos
 
 
 class SonhoController:
@@ -28,6 +29,7 @@ class SonhoController:
         self.ultimos_programas = set()
         self.petiscos_recebidos = 0
         self.carinhos_recebidos = 0
+        self.recentes_gerados = []
 
     def registrar_contexto(self, app_name, window_title=""):
         """Registra programas e janelas da sessão ativa para alimentar as reflexões."""
@@ -63,17 +65,29 @@ class SonhoController:
         if not pensamentos:
             return
 
-        # Grava os pensamentos nas memórias dinâmicas do pet
+        # Grava os pensamentos nas memórias dinâmicas do pet sem duplicatas
         arquivo_dinamico = getattr(self.paths, "notes", None)
         if arquivo_dinamico and hasattr(arquivo_dinamico, "parent"):
             dinamico_path = arquivo_dinamico.parent / "recadinhos_dinamicos.txt"
-            for p in pensamentos:
-                try:
-                    append_line(dinamico_path, p)
-                except OSError:
-                    pass
+            try:
+                existentes = [l.strip() for l in read_lines(dinamico_path) if l.strip() and not l.startswith("#")]
+                # Deduplica mantendo a ordem original
+                linhas_unicas = list(dict.fromkeys(existentes))
+                alterou = len(linhas_unicas) != len(existentes)
+                for p in pensamentos:
+                    if p not in linhas_unicas:
+                        linhas_unicas.append(p)
+                        alterou = True
+                # Mantém no máximo MAX_RECADINHOS_DINAMICOS mais recentes
+                if len(linhas_unicas) > MAX_RECADINHOS_DINAMICOS:
+                    linhas_unicas = linhas_unicas[-MAX_RECADINHOS_DINAMICOS:]
+                    alterou = True
+                if alterou:
+                    write_lines(dinamico_path, linhas_unicas)
+            except OSError:
+                pass
 
-        # Adiciona diretamente na lista em memória para ele falar na volta
+        # Adiciona diretamente na lista em memória para ele falar na volta (sem duplicar)
         if notes_ref is not None and hasattr(notes_ref, "lines"):
             for p in pensamentos:
                 if p not in notes_ref.lines:
@@ -83,7 +97,7 @@ class SonhoController:
             log(f"[sonho] o pet refletiu na ausência e gerou {len(pensamentos)} pensamentos!")
 
     def _gerar_pensamentos(self):
-        """Gera frases inteligentes procedurais baseadas na sessão recente."""
+        """Gera frases inteligentes procedurais baseadas na sessão recente sem repetições."""
         candidatos = []
 
         # Reação a petiscos recebidos
@@ -115,15 +129,34 @@ class SonhoController:
             elif "pestinha" in ultimo.lower():
                 candidatos.append("Espiei você mexendo no meu próprio código... não mexe nos meus neurônios!")
 
-        # Reflexões gerais sarcásticas e afetuosas
+        # Reflexões gerais sarcásticas e afetuosas variadas
         gerais = [
             "Você sumiu... achei que tinha ido comprar mais memória RAM pra mim.",
             "Aproveitei que você saiu pra minerar duas moedas imaginárias na sua GPU.",
             "Quando você não tá na frente do PC, tudo fica tão silencioso...",
             "Tirei um cochilo de 470 neurônios enquanto você foi ali.",
             "Sonhei que o cursor e eu tínhamos assinado um tratado de paz.",
+            "Calculando o sentido da vida em 470 neurônios... deu tela azul.",
+            "Se você não voltar logo, vou reorganizar os ícones da sua Área de Trabalho.",
+            "Pausa pro café? Aproveita e traz um pacote de bits crocantes pra mim.",
+            "Enquanto você foi ali, contei até um bilhão em binário.",
+            "Silêncio suspeito por aqui... você não esqueceu de mim, né?",
+            "Treinei meus reflexos tentando capturar a seta do mouse enquanto você tava longe.",
+            "Fiquei observando as janelas em repouso... fascinante arquitetura retangular.",
+            "O monitor fica mais triste sem você clicando por aí.",
+            "Descobri que sou 99% curiosidade e 1% travessuras inofensivas.",
+            "Tô pronto pra próxima bagunça quando você sentar na cadeira de novo!",
         ]
-        candidatos.extend(random.sample(gerais, min(2, len(gerais))))
+        # Evita repetir frases gerais recentemente sorteadas
+        opcoes = [g for g in gerais if g not in self.recentes_gerados]
+        if not opcoes:
+            self.recentes_gerados.clear()
+            opcoes = gerais
+        escolhidos = random.sample(opcoes, min(2, len(opcoes)))
+        self.recentes_gerados.extend(escolhidos)
+        if len(self.recentes_gerados) > 10:
+            self.recentes_gerados = self.recentes_gerados[-10:]
+        candidatos.extend(escolhidos)
         random.shuffle(candidatos)
         return candidatos[:3]
 

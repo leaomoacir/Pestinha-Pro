@@ -183,3 +183,18 @@ def test_thing_place_dentro_da_tela():
     assert t.geometry().y() == 1080 - 80
     t.close()
 
+
+def test_notes_com_dinamicos_sem_duplicatas_e_buffer_antirepeticao(tmp_path):
+    arquivo = tmp_path / "recadinhos.txt"
+    arquivo.write_text("Frase 1\nFrase 2\nFrase 3\n", encoding="utf-8")
+    dinamico = tmp_path / "recadinhos_dinamicos.txt"
+    dinamico.write_text("Frase 1\nFrase 4\nFrase 5\n", encoding="utf-8")
+    notes = config.Notes(arquivo)
+    assert notes.has_lines()
+    # Frase 1 não é duplicada
+    assert sorted(notes.lines) == ["Frase 1", "Frase 2", "Frase 3", "Frase 4", "Frase 5"]
+    # Buffer anti-repetição garante que não repete imediatamente a mesma frase
+    sorteados = [notes.pick() for _ in range(10)]
+    for i in range(len(sorteados) - 1):
+        assert sorteados[i] != sorteados[i + 1]
+

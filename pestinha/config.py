@@ -315,8 +315,10 @@ class Notes:
         """Post-its de um arquivo de texto (uma frase por linha), relidos quando o arquivo muda."""
         self.path = path
         self.mtime = None
+        self._dinamico_mtime = None
         self.lines = []
         self.last = None
+        self.recent = []
 
     def _reload(self):
         """Relê o arquivo só se a data de modificação mudou (assim dá para editar com o pet aberto)."""
@@ -325,13 +327,27 @@ class Notes:
         except OSError:
             self.lines = []
             return
-        if mtime == self.mtime:
+
+        dinamico = self.path.parent / "recadinhos_dinamicos.txt"
+        d_mtime = dinamico.stat().st_mtime if dinamico.exists() else 0.0
+
+        if mtime == self.mtime and self._dinamico_mtime == d_mtime:
             return
         self.mtime = mtime
-        self.lines = [
+        self._dinamico_mtime = d_mtime
+
+        base_lines = [
             line.strip() for line in read_lines(self.path)
             if line.strip() and not line.lstrip().startswith("#")
         ]
+        # Agrega pensamentos dinâmicos sem duplicatas
+        if dinamico.exists():
+            for d in read_lines(dinamico):
+                d_str = d.strip()
+                if d_str and not d_str.startswith("#") and d_str not in base_lines:
+                    base_lines.append(d_str)
+
+        self.lines = base_lines
 
     def has_lines(self):
         """Diz se há algum post-it disponível."""
@@ -339,10 +355,19 @@ class Notes:
         return bool(self.lines)
 
     def pick(self):
-        """Um post-it ao acaso, sem repetir o último quando há outros."""
+        """Um post-it ao acaso, evitando repetir os últimos exibidos."""
         self._reload()
         if not self.lines:
             return None
-        options = [l for l in self.lines if l != self.last] or self.lines
-        self.last = random.choice(options)
-        return self.last
+        # Evita repetir os últimos recadinhos exibidos (buffer de até 5)
+        options = [l for l in self.lines if l not in self.recent]
+        if not options:
+            self.recent.clear()
+            options = [l for l in self.lines if l != self.last] or self.lines
+        escolhido = random.choice(options)
+        self.last = escolhido
+        self.recent.append(escolhido)
+        limite = min(5, max(1, len(self.lines) - 1))
+        if len(self.recent) > limite:
+            self.recent.pop(0)
+        return escolhido
