@@ -37,6 +37,11 @@ PAGES = [
      "Eu vejo o nome do programa em primeiro plano, o tempo sem usar o teclado ou o mouse, "
      "e a posição das janelas para pousar nelas.\n\nNunca leio o conteúdo de nenhuma janela, "
      "página, documento ou conversa. Os detalhes estão em PRIVACIDADE.md."),
+    ("Backup e Sincronização de Memória",
+     "Toda a memória, personalidade e aprendizado do pet ficam 100% sob o seu controle!\n\n"
+     "• Backup & Restauração (.zip): Você pode exportar e restaurar seus dados a qualquer momento nas Configurações.\n\n"
+     "• Sincronização em múltiplos PCs: Para usar o mesmo pet em outro computador, basta clonar um repositório "
+     "privado no GitHub com o nome 'pestinha-pro-memoria'. O pet sincroniza os dados automaticamente!"),
     ("Agora você escolhe",
      "Na próxima tela você decide o que eu posso fazer: travessuras, bolinha, carinho e "
      "mais. Tudo pode ser mudado depois, pelo menu da bandeja ou pelo botão direito em mim.\n\n"

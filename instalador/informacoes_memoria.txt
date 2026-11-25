@@ -1,0 +1,29 @@
+============================================================
+           PESTINHA PRO - MEMÓRIA E SINCRONIZAÇÃO
+============================================================
+
+1. ONDE SEUS DADOS FICAM GUARDADOS:
+   Suas configurações e a memória aprendida do seu pet ficam
+   guardadas de forma segura e privada na sua pasta de usuário:
+   %LOCALAPPDATA%\Pestinha
+
+   Mesmo se você atualizar o programa no futuro, suas memórias
+   NÃO serão perdidas.
+
+2. BACKUP E RESTAURAÇÃO (.ZIP):
+   A qualquer momento, clique com o botão direito no pet (ou
+   no ícone da bandeja), abra "Configurações" e você encontrará:
+   - "Exportar memória (.zip)" para criar uma cópia de segurança.
+   - "Restaurar memória (.zip)" para carregar em outro computador.
+
+3. SINCRONIZAÇÃO AUTOMÁTICA EM MÚLTIPLOS PCs (GITHUB):
+   Se você quiser que o pet compartilhe a mesma memória e
+   personalidade em mais de um computador:
+   - Crie um repositório privado no seu GitHub com o nome:
+     pestinha-pro-memoria
+   - Clone-o através do GitHub Desktop em seus computadores.
+   - O Pestinha Pro detecta essa pasta automaticamente e faz a
+     sincronização silenciosa ao abrir e ao fechar o programa!
+
+Obrigado por usar o Pestinha Pro!
+============================================================

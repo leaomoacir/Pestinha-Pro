@@ -190,6 +190,13 @@ class SettingsDialog(QDialog):
                 pasta.setObjectName("hint")
                 pasta.setWordWrap(True)
                 layout.addWidget(pasta)
+                info_sync = QLabel(
+                    "💡 <b>Sincronia:</b> Se você clonar um repositório privado <i>pestinha-pro-memoria</i> "
+                    "no GitHub Desktop, o pet sincroniza as memórias automaticamente entre múltiplos computadores."
+                )
+                info_sync.setObjectName("hint")
+                info_sync.setWordWrap(True)
+                layout.addWidget(info_sync)
                 self._update_history_label()
             root.addWidget(group)
 

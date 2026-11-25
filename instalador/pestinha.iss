@@ -25,6 +25,7 @@ SolidCompression=yes
 WizardStyle=modern
 CloseApplications=yes
 SetupIconFile=..\assets\comum\icone.ico
+InfoAfterFile=informacoes_memoria.txt
 
 [Languages]
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
