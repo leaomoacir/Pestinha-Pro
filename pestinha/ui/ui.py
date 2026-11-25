@@ -181,6 +181,10 @@ class SettingsDialog(QDialog):
                 btn_import.clicked.connect(self._importar_backup)
                 row_sync.addWidget(btn_export)
                 row_sync.addWidget(btn_import)
+                if self.paths.memory_git.exists():
+                    btn_git = QPushButton("Sincronizar com Git agora")
+                    btn_git.clicked.connect(self._sincronizar_git_agora)
+                    row_sync.addWidget(btn_git)
                 layout.addLayout(row_sync)
                 everything = QPushButton(f"Apagar todos os dados do {config.APP_NOME}")
                 everything.clicked.connect(self._wipe_everything)
@@ -302,6 +306,16 @@ class SettingsDialog(QDialog):
                 QMessageBox.information(self, "Restauração concluída", "Memória restaurada! Ela entrará em vigor na próxima vez que você abrir o app.")
             else:
                 QMessageBox.warning(self, "Erro na restauração", "Não foi possível restaurar a memória.")
+
+    def _sincronizar_git_agora(self):
+        """Puxa e envia alterações para o repositório Git imediatamente."""
+        from ..sincronizacao import git_pull_seguro, git_push_seguro
+        git_pull_seguro(self.paths.memory)
+        ok = git_push_seguro(self.paths.memory, self.pet_combo.currentText())
+        if ok:
+            QMessageBox.information(self, "Sincronização Git", "Memória sincronizada com sucesso com o repositório Git!")
+        else:
+            QMessageBox.warning(self, "Sincronização Git", "Não foi possível enviar ao Git. Verifique sua conexão.")
 
     def _definir_inicio(self, ligado):
         """Liga ou desliga o início com o sistema; se o sistema recusar, avisa e desfaz a marcação."""
