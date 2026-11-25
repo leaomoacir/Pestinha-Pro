@@ -1,5 +1,10 @@
 # Histórico de versões
 
+## 2.0.0 — correções pós-auditoria
+- **Corrigido:** `import random` ausente em `app.py` (os diálogos Sim/Elogio/Piada etc. do menu radial davam NameError e a notícia ao voltar do ócio nunca aparecia, pois o erro era engolido).
+- **Corrigido:** `Qt` não importado em `controle/interacao.py` ("Pesquisar na Web Agora" quebrava).
+- **Corrigido:** `instalador/compiler.bat` falhava no PyInstaller porque `--specpath build` resolvia o ícone relativo; agora usa caminho absoluto.
+
 ## 2.0.0 — Pestinha Pro (Edição Aprimorada)
 
 Baseado no projeto de código aberto [Pestinha](https://github.com/mille-okws/pestinha) criado por [mille-okws](https://github.com/mille-okws), sob a licença GNU GPL v3.

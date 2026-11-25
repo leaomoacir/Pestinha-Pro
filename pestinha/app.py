@@ -23,6 +23,7 @@ Quem faz o quê:
 """
 
 import math
+import random
 import time
 
 from PySide6.QtCore import QObject, QTimer

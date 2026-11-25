@@ -10,7 +10,7 @@ Mixin de PestinhaApp: usa os atributos criados em PestinhaApp.__init__.
 from ..log import log
 import random
 import time
-from PySide6.QtCore import QObject, Signal
+from PySide6.QtCore import QObject, Qt, Signal
 from PySide6.QtWidgets import QMenu
 from ..core.emotion import PRIORITY
 from ..body.pet import cursor_pos
